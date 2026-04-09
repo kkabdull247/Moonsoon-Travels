@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Moonsoon Travel & Tourism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0d1b2a;--navy2:#111827;--gold:#f5a623;--gold2:#e09420;
+  --green:#2a6049;--green2:#34795c;--cream:#f5f0e8;--white:#fff;
+  --grey:#f9f7f4;--text:#1a1a2e;--muted:#6b7280;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',sans-serif;--display:'Bebas Neue',cursive;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--text);background:#fff;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:var(--sans);border:none;}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;transition:background .4s,box-shadow .4s;}
+#nav.solid{background:rgba(13,27,42,.97);backdrop-filter:blur(12px);box-shadow:0 2px 24px rgba(0,0,0,.4);}
+.n-logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.n-badge{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;font-size:14px;color:var(--navy);flex-shrink:0;}
+.n-name{font-family:var(--serif);font-size:16px;font-weight:700;color:#fff;line-height:1.1;}
+.n-sub{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;}
+.n-links{display:flex;align-items:center;gap:22px;}
+.n-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,.8);letter-spacing:.03em;transition:color .25s;}
+.n-links a:hover{color:var(--gold);}
+.n-btn{background:var(--gold);color:var(--navy);padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;transition:all .25s;}
+.n-btn:hover{background:var(--gold2);transform:translateY(-1px);}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:5px;cursor:pointer;}
+.ham span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+.mob{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(13,27,42,.98);backdrop-filter:blur(16px);padding:16px 5%;z-index:998;flex-direction:column;}
+.mob a{display:block;padding:13px 0;font-size:14px;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.07);font-weight:500;}
+.mob.open{display:flex;}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:580px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(13,27,42,.5) 0%,rgba(13,27,42,.2) 35%,rgba(13,27,42,.7) 100%),
+  url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1600&q=80') center/cover no-repeat;}
+.hero-body{position:relative;z-index:2;text-align:center;padding:68px 5% 0;max-width:860px;width:100%; height:100vh}
+.h-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,.18);border:1px solid rgba(245,166,35,.38);border-radius:20px;padding:6px 16px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
+.h-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pdot 1.8s infinite;}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+.h1{font-family:var(--serif);font-size:clamp(32px,6vw,76px);font-weight:900;color:#fff;line-height:1.08;margin-bottom:18px;}
+.h1 em{font-style:italic;color:var(--gold);}
+.h-p{font-size:clamp(13px,1.7vw,17px);color:rgba(255,255,255,.72);line-height:1.75;max-width:560px;margin:0 auto 30px;}
+.h-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-g{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:26px;font-size:14px;font-weight:600;transition:all .3s;display:inline-flex;align-items:center;gap:6px;}
+.btn-g:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(245,166,35,.38);}
+.btn-o{border:1.5px solid rgba(255,255,255,.42);color:#fff;padding:13px 28px;border-radius:26px;font-size:14px;font-weight:500;background:none;transition:all .3s;}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);}
+.hero-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;background:rgba(13,27,42,.65);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.07);}
+.hero-bar-inner{display:flex;justify-content:center;padding:18px 5%;gap:clamp(20px,5vw,80px);flex-wrap:wrap;}
+.hs{text-align:center;}
+.hs-n{font-family:var(--display);font-size:clamp(24px,3.5vw,38px);color:var(--gold);line-height:1;}
+.hs-l{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:3px;}
+
+/* SECTIONS */
+.sec{padding:80px 5%;}
+.sec-cream{background:var(--cream);}
+.sec-dark{background:var(--navy2);}
+.sec-grey{background:var(--grey);}
+.ey{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.ey-dim{color:rgba(255,255,255,.38);}
+.h2{font-family:var(--serif);font-size:clamp(24px,3.5vw,40px);font-weight:700;color:var(--text);line-height:1.22;margin-bottom:14px;}
+.h2.w{color:#fff;}
+.sp{font-size:14px;color:var(--muted);line-height:1.75;max-width:540px;}
+.sp.w{color:rgba(255,255,255,.58);}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-top:44px;}
+.fc{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:24px 20px;transition:all .35s;position:relative;overflow:hidden;}
+.fc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--navy),var(--green2));opacity:0;transition:.35s;z-index:0;}
+.fc:hover::after{opacity:1;}
+.fc:hover .fi,.fc:hover .ft,.fc:hover .fd{color:#fff !important;}
+.fc:hover .fi{background:rgba(255,255,255,.15);}
+.fi{width:48px;height:48px;background:rgba(245,166,35,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;position:relative;z-index:1;transition:.35s;}
+.ft{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text);margin-bottom:8px;position:relative;z-index:1;transition:.35s;}
+.fd{font-size:13px;color:var(--muted);line-height:1.6;position:relative;z-index:1;transition:.35s;}
+
+/* TABS */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.tab{padding:9px 18px;border-radius:22px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid rgba(0,0,0,.1);background:#fff;color:var(--muted);transition:all .25s;}
+.tab.on,.tab:hover{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* DEST CARDS */
+.dest-hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;}
+.sa{font-size:13px;font-weight:600;color:var(--green);display:flex;align-items:center;gap:5px;white-space:nowrap;transition:gap .25s;}
+.sa:hover{gap:9px;}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+.dc{border-radius:16px;overflow:hidden;position:relative;height:290px;cursor:pointer;}
+.dc-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s;}
+.dc:hover .dc-img{transform:scale(1.07);}
+.dc-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.05) 55%);}
+.dc-body{position:absolute;bottom:0;left:0;right:0;padding:18px;}
+.dc-tag{display:inline-block;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.dc-title{font-family:var(--serif);font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;}
+.dc-meta{font-size:12px;color:rgba(255,255,255,.62);}
+
+/* SEARCH */
+.srch-sec{background:var(--navy2);padding:56px 5%;}
+.srch-wrap{max-width:800px;margin:0 auto;text-align:center;}
+.srch-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px;margin-top:26px;}
+.sg{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;}
+.sf-f{display:flex;flex-direction:column;gap:5px;}
+.sf-f label{font-size:10px;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.sf-f select,.sf-f input{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);border-radius:9px;padding:11px 13px;font-size:13px;color:#fff;font-family:var(--sans);outline:none;transition:border .25s;-webkit-appearance:none;appearance:none;}
+.sf-f select:focus,.sf-f input:focus{border-color:var(--gold);}
+.sf-f select option{background:#111827;color:#fff;}
+.btn-srch{background:var(--gold);color:var(--navy);padding:0 22px;border-radius:9px;font-size:13px;font-weight:700;height:42px;border:none;cursor:pointer;transition:all .25s;white-space:nowrap;}
+.btn-srch:hover{background:var(--gold2);}
+
+/* RAINBOW DRAG */
+.rb-sec{background:var(--navy);padding:68px 0 76px;overflow:hidden;}
+.rb-hd{padding:0 5%;margin-bottom:34px;}
+.drag-outer{overflow:hidden;position:relative;}
+.drag-inner{display:flex;gap:18px;padding:10px 5% 20px;cursor:grab;user-select:none;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;}
+.drag-inner:active{cursor:grabbing;}
+.drag-inner::-webkit-scrollbar{display:none;}
+.rc{flex:0 0 268px;height:345px;border-radius:20px;overflow:hidden;position:relative;transition:transform .3s,box-shadow .3s;}
+.rc:hover{transform:translateY(-10px);box-shadow:0 28px 56px rgba(0,0,0,.5);}
+.rc-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s;}
+.rc:hover .rc-bg{transform:scale(1.06);}
+.rc-sh{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.04) 52%);}
+.rc-num{position:absolute;top:14px;right:16px;font-family:var(--display);font-size:46px;color:rgba(255,255,255,.1);line-height:1;}
+.rc-body{position:absolute;bottom:0;left:0;right:0;padding:20px;}
+.rc-lbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
+.rc-title{font-family:var(--serif);font-size:20px;font-weight:700;color:#fff;margin-bottom:7px;}
+.rc-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.5;}
+.drag-hint{text-align:center;font-size:12px;color:rgba(255,255,255,.28);margin-top:4px;letter-spacing:.04em;}
+
+/* FACTS */
+.facts-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:44px;}
+.fact-list{display:flex;flex-direction:column;gap:13px;}
+.fact-row{display:flex;gap:14px;align-items:flex-start;background:#fff;padding:17px;border-radius:13px;border-left:3px solid var(--gold);box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s;}
+.fact-row:hover{transform:translateX(5px);box-shadow:0 6px 22px rgba(0,0,0,.1);}
+.fe{font-size:22px;flex-shrink:0;}
+.ft2{font-size:13px;color:var(--muted);line-height:1.65;}
+.ft2 strong{color:var(--text);}
+.facts-panel{border-radius:18px;overflow:hidden;background:linear-gradient(145deg,var(--navy) 0%,var(--green) 55%,#c47a20 100%);padding:32px 24px;display:flex;flex-direction:column;gap:0;}
+.fp-item{text-align:center;padding:18px 0;}
+.fp-n{font-family:var(--serif);font-size:48px;font-weight:900;color:var(--gold);line-height:1;}
+.fp-l{font-size:13px;color:rgba(255,255,255,.58);margin-top:4px;}
+.fp-div{height:1px;background:rgba(255,255,255,.1);}
+
+/* ACTIVITIES */
+.act-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:44px;}
+.act-list{display:flex;flex-direction:column;gap:11px;}
+.ai{display:flex;gap:12px;align-items:flex-start;padding:15px;border-radius:12px;border:1px solid rgba(255,255,255,.08);transition:all .3s;}
+.ai:hover{background:rgba(255,255,255,.05);border-color:rgba(245,166,35,.3);}
+.ai-icon{width:42px;height:42px;border-radius:10px;background:rgba(245,166,35,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ai-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:3px;}
+.ai-desc{font-size:12px;color:rgba(255,255,255,.48);line-height:1.55;}
+.win-vis{border-radius:18px;overflow:hidden;position:relative;height:460px;}
+.win-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1551524559-8af4e6624178?w=800&q=80') center/cover no-repeat;filter:brightness(.5);}
+.win-card{position:absolute;bottom:22px;left:18px;right:18px;background:rgba(13,27,42,.88);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px;}
+.wc-title{font-family:var(--serif);font-size:18px;font-weight:700;color:#fff;margin-bottom:7px;}
+.wc-text{font-size:13px;color:rgba(255,255,255,.58);line-height:1.6;margin-bottom:14px;}
+.btn-sm{display:inline-block;background:var(--gold);color:var(--navy);padding:9px 20px;border-radius:20px;font-size:13px;font-weight:700;transition:all .25s;cursor:pointer;}
+.btn-sm:hover{background:var(--gold2);transform:translateY(-1px);}
+/* snow */
+.snow-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.sfl{position:absolute;color:rgba(255,255,255,.65);font-size:14px;animation:sfdown linear infinite;}
+@keyframes sfdown{0%{transform:translateY(-30px) rotate(0);opacity:0;}10%{opacity:1;}90%{opacity:.6;}100%{transform:translateY(480px) rotate(350deg);opacity:0;}}
+
+/* MAP */
+.map-sec{background:var(--green);padding:58px 5%;}
+.map-in{max-width:780px;margin:0 auto;text-align:center;}
+.pins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:26px;}
+.pin{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:11px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .3s;}
+.pin:hover,.pin.active{background:rgba(245,166,35,.25);border-color:rgba(245,166,35,.55);}
+.pd{width:9px;height:9px;background:var(--gold);border-radius:50%;margin:0 auto 7px;box-shadow:0 0 0 3px rgba(245,166,35,.3);}
+.pn{font-size:13px;font-weight:600;color:#fff;}
+.pt{font-size:10px;color:rgba(255,255,255,.48);margin-top:2px;}
+#mapinfo{display:none;margin-top:16px;font-size:13px;color:rgba(255,255,255,.78);background:rgba(0,0,0,.22);border-radius:10px;padding:12px 16px;text-align:left;}
+#mapinfo.vis{display:block;}
+
+/* EVENTS */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:34px;}
+.ev{border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);background:#fff;transition:all .35s;cursor:pointer;}
+.ev:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,0,0,.1);}
+.ev-img{height:165px;background-size:cover;background-position:center;}
+.ev-body{padding:15px;}
+.ev-date{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;}
+.ev-title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.ev-loc{font-size:12px;color:var(--muted);}
+
+/* GALLERY */
+.gal-sec{background:var(--navy2);padding:58px 0;}
+.gal-hd{padding:0 5%;margin-bottom:26px;}
+.gstrip{display:flex;gap:10px;overflow-x:auto;padding:0 5% 10px;scrollbar-width:none;}
+.gstrip::-webkit-scrollbar{display:none;}
+.gi{flex:0 0 188px;height:225px;border-radius:13px;overflow:hidden;position:relative;cursor:pointer;}
+.gi-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s;}
+.gi:hover .gi-bg{transform:scale(1.1);}
+.gi-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 55%);opacity:0;transition:.3s;}
+.gi:hover .gi-ov{opacity:1;}
+
+/* HASHTAG */
+.hash-sec{background:var(--cream);padding:60px 5%;text-align:center;}
+.hash-big{font-family:var(--display);font-size:clamp(40px,7vw,90px);color:var(--navy);letter-spacing:.03em;line-height:1;margin-bottom:14px;}
+.hash-big span{color:var(--gold);}
+.hash-sub{font-size:14px;color:var(--muted);max-width:460px;margin:0 auto 28px;line-height:1.7;}
+.soc-row{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;}
+.soc{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:22px;padding:10px 18px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .25s;}
+.soc:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:56px 5% 28px;}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px;}
+.fl{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.fl-b{width:36px;height:36px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;font-size:13px;color:var(--navy);}
+.fl-n{font-family:var(--serif);font-size:15px;font-weight:700;color:#fff;}
+.fd2{font-size:12px;color:rgba(255,255,255,.38);line-height:1.7;max-width:240px;margin-bottom:18px;}
+.fsocs{display:flex;gap:8px;}
+.fsoc{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;transition:all .25s;}
+.fsoc:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.fch{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:14px;}
+.fcl{display:flex;flex-direction:column;gap:9px;}
+.fcl a{font-size:13px;color:rgba(255,255,255,.48);transition:color .25s;}
+.fcl a:hover{color:var(--gold);}
+.fbot{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.fcopy{font-size:12px;color:rgba(255,255,255,.26);}
+.fbadges{display:flex;gap:8px;flex-wrap:wrap;}
+.fbadge{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.32);}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .sg{grid-template-columns:1fr 1fr;}
+  .btn-srch{grid-column:span 2;height:44px;}
+  .facts-wrap,.act-wrap{grid-template-columns:1fr;}
+  .facts-panel{display:grid;grid-template-columns:repeat(2,1fr);}
+  .fp-div{display:none;}
+  .fg{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .n-links{display:none;}
+  .ham{display:flex;}
+  .dest-hdr{flex-direction:column;align-items:flex-start;}
+  .sg{grid-template-columns:1fr;}
+  .btn-srch{grid-column:1;}
+  .pins-grid{grid-template-columns:repeat(2,1fr);}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+  .sec{padding:60px 5%;}
+  .fg{grid-template-columns:1fr;}
+  .facts-panel{display:flex;flex-direction:column;}
+}
+@media(max-width:400px){
+  .rc{flex:0 0 228px;height:295px;}
+  .feat-grid{grid-template-columns:1fr;}
+}
+@media(max-width:320px){
+  .h1{font-size:26px;}
+  .rc{flex:0 0 192px;height:268px;}
+  .sec{padding:50px 4%;}
+  #nav{padding:0 4%;}
+  .n-name{font-size:13px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="n-logo">
+    <div class="n-badge">MT</div>
+    <div>
+      <div class="n-name">Moonsoon</div>
+      <div class="n-sub">Travel &amp; Tourism</div>
+    </div>
+  </div>
+  <div class="n-links">
+    <a href="#destinations">Destinations</a>
+    <a href="#activities">Activities</a>
+    <a href="#events">Events</a>
+    <a href="#gallery">Gallery</a>
+    <button class="n-btn" onclick="document.getElementById('search').scrollIntoView({behavior:'smooth'})">Plan Trip</button>
+  </div>
+  <button class="ham" id="ham">
+    <span id="h1s"></span><span id="h2s"></span><span id="h3s"></span>
+  </button>
+</nav>
+<div class="mob" id="mob">
+  <a href="#destinations">Destinations</a>
+  <a href="#activities">Activities</a>
+  <a href="#events">Events</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#search">Plan My Trip</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-body">
+    <div class="h-pill"><span class="h-dot"></span>Discover the World</div>
+    <h1 class="h1">Natural splendor,<br><em>Ancient</em> history &amp;<br>Modern adventures</h1>
+    <p class="h-p">Delectable cuisine, breathtaking landscapes and rich cultural heritage — all easily within reach with Moonsoon Travel &amp; Tourism.</p>
+    <div class="h-btns">
+      <button class="btn-g" onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">Explore Destinations →</button>
+      <button class="btn-o" onclick="document.getElementById('search').scrollIntoView({behavior:'smooth'})">Plan My Journey</button>
+    </div>
+  </div>
+  <div class="hero-bar">
+    <div class="hero-bar-inner">
+      <div class="hs"><div class="hs-n" id="sn1">0</div><div class="hs-l">Destinations</div></div>
+      <div class="hs"><div class="hs-n" id="sn2">0</div><div class="hs-l">Happy Travellers</div></div>
+      <div class="hs"><div class="hs-n" id="sn3">0</div><div class="hs-l">Satisfaction</div></div>
+      <div class="hs"><div class="hs-n" id="sn4">0</div><div class="hs-l">Years Experience</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec-strategic" id="why">
+    <div class="container">
+        
+        <header class="strategic-header">
+            <span class="strategic-tag">Core Competencies</span>
+            <h2 class="strategic-title">
+                ENGINEERED <br><span style="color: var(--gold);">AUTHORITY.</span>
+            </h2>
+            <p class="strategic-lead">
+                We bridge the gap between complex infrastructure and elite visual identity. Our systems are built for high-stakes environments where precision is non-negotiable.
+            </p>
+        </header>
+
+        <div class="feat-grid-architectural">
+            
+            <article class="fc-card">
+                <span class="fi-index">01 // ARCH</span>
+                <h3 class="ft-label">Technical Oversight</h3>
+                <p class="fd-content">
+                    Comprehensive audit and mitigation of technical debt. We implement high-level architectural optimizations designed for scalability and performance.
+                </p>
+            </article>
+
+            <article class="fc-card">
+                <span class="fi-index">02 // DEPL</span>
+                <h3 class="ft-label">Global Logistics</h3>
+                <p class="fd-content">
+                    Managing the complete lifecycle of deployment—from server-side logic to front-end delivery—ensuring zero operational friction for your partners.
+                </p>
+            </article>
+
+            <article class="fc-card">
+                <span class="fi-index">03 // SYST</span>
+                <h3 class="ft-label">Brand Ecosystems</h3>
+                <p class="fd-content">
+                    We develop high-retention digital environments by merging corporate-grade security with a minimalist, high-fidelity user experience.
+                </p>
+            </article>
+
+            <article class="fc-card">
+                <span class="fi-index">04 // PROT</span>
+                <h3 class="ft-label">Risk Mitigation</h3>
+                <p class="fd-content">
+                    24/7 technical surveillance and fail-safe integration. Every system we engineer is protected against disruption to secure your digital equity.
+                </p>
+            </article>
+
+        </div>
+    </div>
+</section>
+<style>/* --- Global Variables for Scaling --- */
+:root {
+    --navy: #0d1b2a;
+    --navy2: #111827;
+    --gold: #f5a623;
+    --gold2: #e09420;
+    --muted: #6b7280;
+    --white: #fff;
+    --display: 'Bebas Neue', cursive;
+    --sans: 'Inter', sans-serif;
+    --border-alpha: rgba(245, 166, 35, 0.15);
+}
+
+/* --- Strategic Advantage Section --- */
+.sec-strategic {
+    padding: 140px 60px;
+    /* background-color: var(--navy); */
+    font-family: var(--sans);
+    border-top: 1px solid var(--border-alpha);
+    overflow: hidden;
+}
+
+.strategic-header {
+    margin-bottom: 80px;
+}
+
+.strategic-tag {
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.strategic-title {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 0.85;
+    color:var(--navy2) ;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.strategic-lead {
+    max-width: 600px;
+    margin-top: 25px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+/* --- Industrial Grid Layout --- */
+.feat-grid-architectural {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px; /* The "Line" effect */
+    background-color: var(--border-alpha);
+    border: 1px solid var(--border-alpha);
+}
+
+.fc-card {
+    background-color: var(--navy2);
+    padding: 70px 45px;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle Hover interaction */
+.fc-card:hover {
+    background-color: #161e2d;
+}
+
+.fc-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.fc-card:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.fi-index {
+    color: var(--gold);
+    font-family: var(--display);
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    display: block;
+}
+
+.ft-label {
+    font-family: var(--display);
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.fd-content {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin: 0;
+}</style>
+
+<!-- SEARCH -->
+<section class="srch-sec" id="search">
+  <div class="srch-wrap">
+    <div class="ey" style="text-align:center;">Find Your Journey</div>
+    <h2 class="h2 w" style="text-align:center;">Discover your perfect getaway</h2>
+    <div class="srch-box">
+      <div class="sg">
+        <div class="sf-f">
+          <label>Destination</label>
+          <select>
+            <option value="">Select destination</option>
+            <option>Yerevan, Armenia</option>
+            <option>Lake Sevan</option>
+            <option>Dilijan Forest</option>
+            <option>Tatev Monastery</option>
+            <option>Noravank Canyon</option>
+            <option>Mount Aragats</option>
+          </select>
+        </div>
+        <div class="sf-f">
+          <label>Travel Date</label>
+          <input type="date"/>
+        </div>
+        <div class="sf-f">
+          <label>Travellers</label>
+          <select>
+            <option>1 Person</option>
+            <option>2 People</option>
+            <option>3–5 People</option>
+            <option>6+ Group</option>
+          </select>
+        </div>
+        <button class="btn-srch">Search Trips</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP DESTINATIONS -->
+<section class="sec" id="destinations">
+  <div class="dest-hdr">
+    <div>
+      <div class="ey">Handpicked for You</div>
+      <h2 class="h2" style="margin-bottom:4px;">Top Destinations</h2>
+      <p class="sp">Explore our curated selection of breathtaking places.</p>
+    </div>
+    <a href="#" class="sa">See all destinations →</a>
+  </div>
+  <div class="tabs">
+    <div class="tab on">All</div>
+    <div class="tab">🏛 Cultural Heritage</div>
+    <div class="tab">🌿 Type of Adventure</div>
+    <div class="tab">🎉 Seasonal Visit</div>
+  </div>
+  <div class="dest-grid">
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Heritage</div><div class="dc-title">The Geghard Monastery</div><div class="dc-meta">⭐ 4.9 · UNESCO World Heritage</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1580674684081-7617fbf3d745?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Nature</div><div class="dc-title">Lake Sevan</div><div class="dc-meta">⭐ 4.8 · Largest Mountain Lake</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Canyon</div><div class="dc-title">Noravank &amp; Surroundings</div><div class="dc-meta">⭐ 4.9 · Red Rock Canyon</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Culture</div><div class="dc-title">Yerevan City Nights</div><div class="dc-meta">⭐ 4.7 · Capital &amp; Cuisine</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Adventure</div><div class="dc-title">Mount Aragats Summit</div><div class="dc-meta">⭐ 4.8 · 4,090m Peak Trek</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-img" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=700&q=80');"></div>
+      <div class="dc-grad"></div>
+      <div class="dc-body"><div class="dc-tag">Forest</div><div class="dc-title">Dilijan National Park</div><div class="dc-meta">⭐ 4.9 · Armenia's Switzerland</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RAINBOW DRAG CARDS -->
+<section class="rb-sec" id="experiences">
+  <div class="rb-hd">
+    <div class="ey ey-dim">Swipe to Explore</div>
+    <h2 class="h2 w">Unique Nights &amp; Experiences</h2>
+    <p class="sp w">Drag the cards to discover all our curated travel experiences — a full rainbow of adventures awaits.</p>
+  </div>
+  <div class="drag-outer">
+    <div class="drag-inner" id="dragInner">
+
+      <div class="rc" style="background:linear-gradient(160deg,#7f1d1d,#dc2626,#f97316);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">01</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#fca5a5;">🔥 Fire &amp; Feast</div>
+          <div class="rc-title">Khorovats Night</div>
+          <div class="rc-desc">Traditional Armenian BBQ under the stars with live duduk music and folk dance.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#7c2d12,#ea580c,#fbbf24);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">02</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#fdba74;">🍷 Wine Voyage</div>
+          <div class="rc-title">Vineyard Sunset</div>
+          <div class="rc-desc">Private wine tasting at a 6,000-year-old family-run winery in Areni Village.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#713f12,#d97706,#fde68a);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">03</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#fde68a;">☀️ Desert Gold</div>
+          <div class="rc-title">Ararat Balloon</div>
+          <div class="rc-desc">Sunrise hot-air balloon over the legendary Ararat Valley vineyards at dawn.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#14532d,#16a34a,#86efac);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">04</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#86efac;">🌿 Forest Escape</div>
+          <div class="rc-title">Dilijan Retreat</div>
+          <div class="rc-desc">Luxury glamping deep in Armenia's lush national forest with natural hot springs.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#134e4a,#0d9488,#67e8f9);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">05</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#67e8f9;">🏄 Lake Life</div>
+          <div class="rc-title">Sevan Sunrise Sail</div>
+          <div class="rc-desc">Kayak across the world's highest freshwater lake at the break of dawn.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#1e3a8a,#2563eb,#93c5fd);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">06</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#93c5fd;">🔭 Sky Gazing</div>
+          <div class="rc-title">Byurakan Observatory</div>
+          <div class="rc-desc">Stargaze through a historic Soviet-era telescope with an expert astronomer.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#3b0764,#7e22ce,#c4b5fd);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">07</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#c4b5fd;">🔮 Mystical Caves</div>
+          <div class="rc-title">Geghard Rock Chapel</div>
+          <div class="rc-desc">UNESCO monastery carved entirely into a sheer cliff face — ancient and mystical.</div>
+        </div>
+      </div>
+
+      <div class="rc" style="background:linear-gradient(160deg,#831843,#db2777,#f9a8d4);">
+        <div class="rc-bg" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80');mix-blend-mode:overlay;"></div>
+        <div class="rc-sh"></div>
+        <div class="rc-num">08</div>
+        <div class="rc-body">
+          <div class="rc-lbl" style="color:#f9a8d4;">🌸 Flower Festival</div>
+          <div class="rc-title">Carpet of Blooms</div>
+          <div class="rc-desc">Yerevan's Republic Square turns into a living floral masterpiece every May.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="drag-hint">← drag or swipe to explore all 8 rainbow experiences →</p>
+</section>
+
+<!-- INTERESTING FACTS -->
+<section class="sec sec-cream" id="facts">
+  <div class="ey">Did You Know?</div>
+  <h2 class="h2">Interesting facts about our destinations</h2>
+  <div class="facts-wrap">
+    <div class="fact-list">
+      <div class="fact-row"><div class="fe">🍷</div><div class="ft2"><strong>World's oldest winery</strong> — The Areni-1 cave holds the oldest winemaking facility on Earth, dating back 6,100 years.</div></div>
+      <div class="fact-row"><div class="fe">⛪</div><div class="ft2"><strong>First Christian nation</strong> — Armenia became the world's first country to adopt Christianity as its state religion in 301 AD.</div></div>
+      <div class="fact-row"><div class="fe">🏔️</div><div class="ft2"><strong>Biblical Mount Ararat</strong> — The legendary resting place of Noah's Ark is visible from Yerevan on clear days.</div></div>
+      <div class="fact-row"><div class="fe">📜</div><div class="ft2"><strong>Unique alphabet</strong> — The Armenian script, created in 405 AD, is one of the world's most distinctive writing systems still in use today.</div></div>
+      <div class="fact-row"><div class="fe">🌊</div><div class="ft2"><strong>Lake Sevan</strong> — One of the world's largest freshwater high-altitude lakes, sitting at 1,900 metres above sea level.</div></div>
+    </div>
+    <div class="facts-panel">
+      <div class="fp-item"><div class="fp-n">6,100</div><div class="fp-l">Years of Winemaking</div></div>
+      <div class="fp-div"></div>
+      <div class="fp-item"><div class="fp-n">4,090m</div><div class="fp-l">Mount Aragats Height</div></div>
+      <div class="fp-div"></div>
+      <div class="fp-item"><div class="fp-n">3,000+</div><div class="fp-l">Historical Monuments</div></div>
+      <div class="fp-div"></div>
+      <div class="fp-item"><div class="fp-n">301 AD</div><div class="fp-l">First Christian Nation</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES / WINTER -->
+<section class="sec sec-dark" id="activities">
+  <div class="act-wrap">
+    <div>
+      <div class="ey ey-dim">All Seasons</div>
+      <h2 class="h2 w">Top Activities in Armenia</h2>
+      <p class="sp w" style="margin-bottom:26px;">Year-round adventures from snowy ski slopes to blooming summer trails and harvest vineyard tours.</p>
+      <div class="act-list">
+        <div class="ai"><div class="ai-icon">⛷️</div><div><div class="ai-title">Skiing &amp; Snowboarding</div><div class="ai-desc">Tsakhkadzor resort offers world-class slopes from December to March with panoramic views.</div></div></div>
+        <div class="ai"><div class="ai-icon">🥾</div><div><div class="ai-title">Trekking &amp; Hiking</div><div class="ai-desc">The Transcaucasian Trail passes through gorges, forests, and traditional mountain villages.</div></div></div>
+        <div class="ai"><div class="ai-icon">🏺</div><div><div class="ai-title">Pottery &amp; Crafts</div><div class="ai-desc">Try traditional Armenian carpet weaving and ceramic arts in the historic city of Gyumri.</div></div></div>
+        <div class="ai"><div class="ai-icon">🎵</div><div><div class="ai-title">Duduk Music Workshops</div><div class="ai-desc">Learn the UNESCO-listed duduk wooden flute from master musicians in Yerevan.</div></div></div>
+        <div class="ai"><div class="ai-icon">🍽️</div><div><div class="ai-title">Culinary Tours</div><div class="ai-desc">Cook lavash bread, taste dolma and khorovats at authentic family kitchens.</div></div></div>
+      </div>
+    </div>
+    <div class="win-vis">
+      <div class="win-img"></div>
+      <div class="snow-wrap" id="snowWrap"></div>
+      <div class="win-card">
+        <div class="wc-title">Winter Holidays in Armenia</div>
+        <div class="wc-text">Experience the magic of a white Christmas at Tsakhkadzor — snow-capped peaks, warm Armenian hospitality, glowing fireplaces and star-lit night skies.</div>
+        <a href="#search" class="btn-sm">Plan Winter Trip →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-sec" id="map">
+  <div class="map-in">
+    <div class="ey" style="color:rgba(255,255,255,.42);">Interactive Map</div>
+    <h2 class="h2 w">Explore Armenia through the interactive map</h2>
+    <p class="sp w" style="margin:0 auto 6px;">Click any destination pin to get travel info, best season &amp; insider tips.</p>
+    <div class="pins-grid">
+      <div class="pin" data-place="Yerevan" data-info="🏙 Capital city — vibrant blend of Soviet architecture, modern cafés and ancient Erebuni fortress. Best season: Mar–Nov."><div class="pd"></div><div class="pn">Yerevan</div><div class="pt">Capital City</div></div>
+      <div class="pin" data-place="Lake Sevan" data-info="🏞 Armenia's jewel — one of the world's highest freshwater lakes. Perfect for kayaking and fishing. Best: Jun–Sep."><div class="pd"></div><div class="pn">Lake Sevan</div><div class="pt">Alpine Lake</div></div>
+      <div class="pin" data-place="Dilijan" data-info="🌲 Armenia's Switzerland — lush pine forests, boutique guesthouses, hot springs and spa retreats. Best: May–Oct."><div class="pd"></div><div class="pn">Dilijan</div><div class="pt">Forest &amp; Spas</div></div>
+      <div class="pin" data-place="Tatev" data-info="⛪ Cliff-top monastery connected by the world's longest non-stop cable car (Wings of Tatev). Best: Apr–Oct."><div class="pd"></div><div class="pn">Tatev</div><div class="pt">Cliff Monastery</div></div>
+      <div class="pin" data-place="Noravank" data-info="🏜 Stunning red canyon with a 13th-century monastery. Ideal for photography and hiking. Best: Apr–Oct."><div class="pd"></div><div class="pn">Noravank</div><div class="pt">Red Canyon</div></div>
+      <div class="pin" data-place="Gyumri" data-info="🎨 Cultural capital — vibrant arts scene, restored black tuff buildings and artisan craft markets."><div class="pd"></div><div class="pn">Gyumri</div><div class="pt">Arts &amp; Culture</div></div>
+      <div class="pin" data-place="Tsakhkadzor" data-info="⛷ Armenia's top ski resort. 15km of slopes. Winter: Dec–Mar. Summer: hiking, biking &amp; paragliding."><div class="pd"></div><div class="pn">Tsakhkadzor</div><div class="pt">Ski Resort</div></div>
+      <div class="pin" data-place="Areni" data-info="🍷 Home to the world's oldest winery. Annual wine festival in October. Must try: Areni Red wine."><div class="pd"></div><div class="pn">Areni</div><div class="pt">Wine Village</div></div>
+      <div class="pin" data-place="Geghard" data-info="🪨 UNESCO rock-cut monastery partially carved from a single cliff face. Ancient, atmospheric and mystical."><div class="pd"></div><div class="pn">Geghard</div><div class="pt">Rock Church</div></div>
+    </div>
+    <div id="mapinfo"></div>
+    <br/>
+    <button class="btn-g" style="margin-top:10px;">Launch Full Map →</button>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="sec" id="events">
+  <div class="ey">What's On</div>
+  <h2 class="h2">Upcoming Events &amp; Festivals</h2>
+  <div class="ev-grid">
+    <div class="ev">
+      <div class="ev-img" style="background-image:url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80');"></div>
+      <div class="ev-body"><div class="ev-date">🗓 18–20 Apr 2026</div><div class="ev-title">Vardavar Water Festival</div><div class="ev-loc">📍 Yerevan, Central Square</div></div>
+    </div>
+    <div class="ev">
+      <div class="ev-img" style="background-image:url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&q=80');"></div>
+      <div class="ev-body"><div class="ev-date">🗓 5–7 May 2026</div><div class="ev-title">International Armenia Expo</div><div class="ev-loc">📍 Yerevan Expo Centre</div></div>
+    </div>
+    <div class="ev">
+      <div class="ev-img" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80');"></div>
+      <div class="ev-body"><div class="ev-date">🗓 12 Jun 2026</div><div class="ev-title">Long Hiking Boot Trail</div><div class="ev-loc">📍 Transcaucasian Trail</div></div>
+    </div>
+    <div class="ev">
+      <div class="ev-img" style="background-image:url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80');"></div>
+      <div class="ev-body"><div class="ev-date">🗓 3–5 Oct 2026</div><div class="ev-title">Harvest Wine Village Festival</div><div class="ev-loc">📍 Areni, Vayots Dzor</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gal-sec" id="gallery">
+  <div class="gal-hd">
+    <div class="ey ey-dim">Visual Stories</div>
+    <h2 class="h2 w">Moonsoon through the lens</h2>
+  </div>
+  <div class="gstrip" id="gstrip">
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1580674684081-7617fbf3d745?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=400&q=80');"></div><div class="gi-ov"></div></div>
+    <div class="gi"><div class="gi-bg" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80');"></div><div class="gi-ov"></div></div>
+  </div>
+</section>
+
+<!-- HASHTAG -->
+<section class="hash-sec">
+  <div class="hash-big">#<span>Moonsoon</span>Travel</div>
+  <p class="hash-sub">Share your journey with us and be featured on our website. Tag us in your adventures across the world.</p>
+  <div class="soc-row">
+    <div class="soc">📘 Facebook</div>
+    <div class="soc">📸 Instagram</div>
+    <div class="soc">🐦 Twitter / X</div>
+    <div class="soc">▶️ YouTube</div>
+    <div class="soc">💼 LinkedIn</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fg">
+    <div>
+      <div class="fl"><div class="fl-b">MT</div><div class="fl-n">Moonsoon Travel &amp; Tourism</div></div>
+      <p class="fd2">Crafting extraordinary journeys since 2009. We believe travel transforms lives — one adventure at a time.</p>
+      <div class="fsocs">
+        <div class="fsoc">f</div><div class="fsoc">in</div><div class="fsoc">tw</div><div class="fsoc">yt</div>
+      </div>
+    </div>
+    <div>
+      <div class="fch">Destinations</div>
+      <div class="fcl"><a href="#">Armenia</a><a href="#">Georgia</a><a href="#">Azerbaijan</a><a href="#">Turkey</a><a href="#">Iran</a></div>
+    </div>
+    <div>
+      <div class="fch">Services</div>
+      <div class="fcl"><a href="#">Group Tours</a><a href="#">Private Trips</a><a href="#">Adventure</a><a href="#">Cultural Tours</a><a href="#">Honeymoon</a></div>
+    </div>
+    <div>
+      <div class="fch">Company</div>
+      <div class="fcl"><a href="#">About Us</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Press</a></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">© 2026 Moonsoon Travel &amp; Tourism. All rights reserved.</div>
+    <div class="fbadges">
+      <div class="fbadge">IATA Member</div>
+      <div class="fbadge">ISO Certified</div>
+      <div class="fbadge">TripAdvisor Award</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* NAV */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 50), {passive:true});
+
+/* HAMBURGER */
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mob');
+ham.addEventListener('click', () => {
+  mob.classList.toggle('open');
+  const o = mob.classList.contains('open');
+  document.getElementById('h1s').style.transform = o ? 'rotate(45deg) translate(5px,5px)' : '';
+  document.getElementById('h2s').style.opacity = o ? '0' : '1';
+  document.getElementById('h3s').style.transform = o ? 'rotate(-45deg) translate(5px,-5px)' : '';
+});
+mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+/* HERO GSAP */
+gsap.timeline({defaults:{ease:'power3.out'}})
+  .from('.h-pill',{opacity:0,y:16,duration:.65,delay:.2})
+  .from('.h1',{opacity:0,y:44,duration:.9},'-=.3')
+  .from('.h-p',{opacity:0,y:24,duration:.7},'-=.5')
+  .from('.h-btns',{opacity:0,y:16,duration:.6},'-=.35')
+  .from('.hs',{opacity:0,y:20,stagger:.1,duration:.5},'-=.3');
+
+/* COUNTER ANIMATION */
+function countUp(el, target, suffix='', prefix='') {
+  const start = performance.now();
+  const dur = 1800;
+  const update = now => {
+    const p = Math.min((now-start)/dur, 1);
+    const val = Math.floor(p * target);
+    el.textContent = prefix + (val >= 1000 ? (val/1000).toFixed(0)+'K+' : val + suffix);
+    if(p < 1) requestAnimationFrame(update);
+    else el.textContent = prefix + (target >= 1000 ? (target/1000).toFixed(0)+'K+' : target + suffix);
+  };
+  requestAnimationFrame(update);
+}
+ScrollTrigger.create({
+  trigger:'.hero-bar', start:'top 95%', once:true,
+  onEnter:() => {
+    countUp(document.getElementById('sn1'), 150, '+');
+    countUp(document.getElementById('sn2'), 12000);
+    document.getElementById('sn3').textContent = '98%';
+    document.getElementById('sn4').textContent = '15yr';
+  }
+});
+
+/* SCROLL REVEALS */
+function rev(sel, extra={}) {
+  gsap.utils.toArray(sel).forEach((el,i) => {
+    gsap.from(el, {
+      scrollTrigger:{trigger:el, start:'top 89%', toggleActions:'play none none none'},
+      opacity:0, y:32, duration:.75,
+      delay: extra.stagger ? i*(extra.stagger) : 0,
+      ease:'power3.out', ...extra
+    });
+  });
+}
+rev('.fc',{stagger:.08});
+rev('.dc',{stagger:.07,y:28,scale:.95});
+rev('.rc',{stagger:.06,y:44});
+rev('.fact-row',{stagger:.07,x:-22,y:0});
+rev('.ai',{stagger:.07,x:-18,y:0});
+rev('.ev',{stagger:.08});
+rev('.facts-panel');
+rev('.win-vis');
+rev('.hash-big',{scale:.82,y:0});
+rev('.fp-item',{stagger:.1});
+
+/* TABS */
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    gsap.from('.dest-grid', {opacity:.6, duration:.4});
+  });
+});
+
+/* MAP PINS */
+document.querySelectorAll('.pin').forEach(pin => {
+  pin.addEventListener('click', () => {
+    document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
+    pin.classList.add('active');
+    const info = document.getElementById('mapinfo');
+    info.innerHTML = '<strong style="color:var(--gold);">' + pin.dataset.place + ':</strong> ' + pin.dataset.info;
+    info.classList.add('vis');
+    gsap.from(info, {opacity:0, y:8, duration:.35, ease:'power2.out'});
+  });
+});
+
+/* SNOWFLAKES */
+const sw = document.getElementById('snowWrap');
+['❄','❅','❆','•','✦'].forEach(ch => {
+  for(let i=0;i<4;i++){
+    const d = document.createElement('div');
+    d.className = 'sfl';
+    d.textContent = ch;
+    d.style.cssText = `left:${Math.random()*100}%;font-size:${Math.random()*12+8}px;animation-duration:${Math.random()*7+5}s;animation-delay:${Math.random()*-8}s;`;
+    sw.appendChild(d);
+  }
+});
+
+/* DRAG TRACK */
+(function(){
+  const el = document.getElementById('dragInner');
+  let dn=false, sx=0, sl=0, vx=0, lx=0, lt=0, raf=0;
+  const start = x => { dn=true; sx=x; sl=el.scrollLeft; vx=0; lx=x; lt=Date.now(); cancelAnimationFrame(raf); };
+  const move = x => {
+    if(!dn) return;
+    const now=Date.now(), dt=Math.max(now-lt,1);
+    vx=(x-lx)/dt*16; lx=x; lt=now;
+    el.scrollLeft = sl-(x-sx);
+  };
+  const end = () => {
+    if(!dn) return; dn=false;
+    (function inertia(){ if(Math.abs(vx)<.4) return; el.scrollLeft-=vx; vx*=.92; raf=requestAnimationFrame(inertia); })();
+  };
+  el.addEventListener('mousedown', e=>{ e.preventDefault(); start(e.clientX); });
+  window.addEventListener('mousemove', e=>move(e.clientX));
+  window.addEventListener('mouseup', end);
+  el.addEventListener('touchstart', e=>start(e.touches[0].clientX), {passive:true});
+  el.addEventListener('touchmove', e=>{ e.preventDefault(); move(e.touches[0].clientX); }, {passive:false});
+  el.addEventListener('touchend', end);
+  el.addEventListener('dragstart', e=>e.preventDefault());
+})();
+
+/* GALLERY AUTO-SCROLL */
+const gs = document.getElementById('gstrip');
+let ga = setInterval(()=>{ gs.scrollLeft+=1; }, 24);
+gs.addEventListener('mouseenter', ()=>clearInterval(ga));
+gs.addEventListener('mouseleave', ()=>{ ga=setInterval(()=>{ gs.scrollLeft+=1; }, 24); });
+
+/* FOOTER LINK HOVER */
+document.querySelectorAll('.fcl a').forEach(a => {
+  a.addEventListener('mouseenter', ()=>gsap.to(a,{x:5,duration:.2,ease:'power2.out'}));
+  a.addEventListener('mouseleave', ()=>gsap.to(a,{x:0,duration:.2,ease:'power2.in'}));
+});
+
+/* ACTIVE NAV HIGHLIGHT */
+const sects = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.n-links a, .mob a');
+window.addEventListener('scroll', ()=>{
+  let cur='';
+  sects.forEach(s=>{ if(scrollY >= s.offsetTop-160) cur=s.id; });
+  navAs.forEach(a=>{ a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--gold)' : ''; });
+}, {passive:true});
+</script>
+</body>
+</html>
